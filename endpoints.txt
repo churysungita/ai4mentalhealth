@@ -1,0 +1,106 @@
+<<<<<<< HEAD
+ here are the endpoints for testing the given routes in Postman:
+
+Teams:
+
+GET /api/teams
+POST /api/teams
+GET /api/teams/{id}
+PUT /api/teams/{id}
+DELETE /api/teams/{id}
+About Us:
+
+GET /api/about-us
+POST /api/about-us
+GET /api/about-us/{id}
+PUT /api/about-us/{id}
+DELETE /api/about-us/{id}
+Slideshows:
+
+GET /api/slideshows
+POST /api/slideshows
+GET /api/slideshows/{id}
+PUT /api/slideshows/{id}
+DELETE /api/slideshows/{id}
+Testimonials:
+
+GET /api/testimonials
+POST /api/testimonials
+GET /api/testimonials/{id}
+PUT /api/testimonials/{id}
+DELETE /api/testimonials/{id}
+Documentations:
+
+GET /api/documentations
+POST /api/documentations
+GET /api/documentations/{id}
+PUT /api/documentations/{id}
+DELETE /api/documentations/{id}
+Contacts:
+
+GET /api/contacts
+POST /api/contacts
+GET /api/contacts/{id}
+PUT /api/contacts/{id}
+DELETE /api/contacts/{id}
+Blogs:
+
+GET /api/blogs
+POST /api/blogs
+GET /api/blogs/{id}
+PUT /api/blogs/{id}
+DELETE /api/blogs/{id}
+=======
+ here are the endpoints for testing the given routes in Postman:
+
+Teams:
+
+GET /api/teams
+POST /api/teams
+GET /api/teams/{id}
+PUT /api/teams/{id}
+DELETE /api/teams/{id}
+About Us:
+
+GET /api/about-us
+POST /api/about-us
+GET /api/about-us/{id}
+PUT /api/about-us/{id}
+DELETE /api/about-us/{id}
+Slideshows:
+
+GET /api/slideshows
+POST /api/slideshows
+GET /api/slideshows/{id}
+PUT /api/slideshows/{id}
+DELETE /api/slideshows/{id}
+Testimonials:
+
+GET /api/testimonials
+POST /api/testimonials
+GET /api/testimonials/{id}
+PUT /api/testimonials/{id}
+DELETE /api/testimonials/{id}
+Documentations:
+
+GET /api/documentations
+POST /api/documentations
+GET /api/documentations/{id}
+PUT /api/documentations/{id}
+DELETE /api/documentations/{id}
+Contacts:
+
+GET /api/contacts
+POST /api/contacts
+GET /api/contacts/{id}
+PUT /api/contacts/{id}
+DELETE /api/contacts/{id}
+Blogs:
+
+GET /api/blogs
+POST /api/blogs
+GET /api/blogs/{id}
+PUT /api/blogs/{id}
+DELETE /api/blogs/{id}
+>>>>>>> dbf3747064a4941463b65446a8a556b0a1c67b00
+Use these routes in Postman with appropriate request methods (GET, POST, PUT, DELETE) to test the functionality of your API endpoints for each resource. Adjust the {id} parameter with the specific ID you want to interact with for routes that require an ID.

@@ -31,6 +31,45 @@ class JournalPaperController extends Controller
         return view('admin.journal_papers.edit', compact('journalPaper', 'teamMembers'));
     }
 
+    // public function storeJo(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'title' => 'required|string',
+    //         'link' => 'required|string',
+    //         'pdf_path' => 'required|file|mimes:pdf|max:2048',
+    //         'image_path' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+    //         'publication_date' => 'required|date',
+    //     ]);
+    
+    //     $pdfFile = $request->file('pdf_path');
+    //     $imageFile = $request->file('image_path');
+    
+    //     // Store PDF file in public folder
+    //     $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
+    //     $pdfFile->move(public_path('journal_papers'), $pdfFileName);
+    //     $pdfPath = 'journal_papers/' . $pdfFileName;
+    
+    //     // Store image file in public folder
+    //     $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
+    //     $imageFile->move(public_path('journal_papers'), $imageFileName);
+    //     $imagePath = 'journal_papers/' . $imageFileName;
+    
+    //     $journalPaper = JournalPaper::create([
+    //         'title' => $validatedData['title'],
+    //         'link' => $validatedData['link'],
+    //         'pdf_path' => $pdfPath,
+    //         'image_path' => $imagePath,
+    //         'publication_date' => $validatedData['publication_date'],
+    //     ]);
+    
+    //     // Attach selected team members to the journal paper
+    //     $journalPaper->teams()->attach($request->input('team_members'));
+    
+    //     $journalPapers = JournalPaper::all();
+    //     $teamMembers = Team::all();
+    
+    //     return redirect()->route('admin.journal_papers.index')->with('success', 'Journal paper created successfully!');
+    // }
     public function storeJo(Request $request)
     {
         $validatedData = $request->validate([
@@ -41,36 +80,37 @@ class JournalPaperController extends Controller
             'publication_date' => 'required|date',
         ]);
     
-        $pdfFile = $request->file('pdf_path');
-        $imageFile = $request->file('image_path');
+        try {
+            $pdfFile = $request->file('pdf_path');
+            $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
+            $pdfFile->move(public_path('journal_papers'), $pdfFileName);
+            $pdfPath = 'journal_papers/' . $pdfFileName;
     
-        // Store PDF file in public folder
-        $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
-        $pdfFile->move(public_path('journal_papers'), $pdfFileName);
-        $pdfPath = 'journal_papers/' . $pdfFileName;
+            // Process image if it exists
+            $imagePath = null;
+            if ($request->hasFile('image_path')) {
+                $imageFile = $request->file('image_path');
+                $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
+                $imageFile->move(public_path('journal_papers'), $imageFileName);
+                $imagePath = 'journal_papers/' . $imageFileName;
+            }
     
-        // Store image file in public folder
-        $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
-        $imageFile->move(public_path('journal_papers'), $imageFileName);
-        $imagePath = 'journal_papers/' . $imageFileName;
+            $journalPaper = JournalPaper::create([
+                'title' => $validatedData['title'],
+                'link' => $validatedData['link'],
+                'pdf_path' => $pdfPath,
+                'image_path' => $imagePath,
+                'publication_date' => $validatedData['publication_date'],
+            ]);
     
-        $journalPaper = JournalPaper::create([
-            'title' => $validatedData['title'],
-            'link' => $validatedData['link'],
-            'pdf_path' => $pdfPath,
-            'image_path' => $imagePath,
-            'publication_date' => $validatedData['publication_date'],
-        ]);
+            $journalPaper->teams()->attach($request->input('team_members'));
     
-        // Attach selected team members to the journal paper
-        $journalPaper->teams()->attach($request->input('team_members'));
-    
-        $journalPapers = JournalPaper::all();
-        $teamMembers = Team::all();
-    
-        return redirect()->route('admin.journal_papers.index')->with('success', 'Journal paper created successfully!');
+            return redirect()->route('admin.journal_papers.index')->with('success', 'Journal paper created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create journal paper. Please try again.']);
+        }
     }
-
+    
 
    
     

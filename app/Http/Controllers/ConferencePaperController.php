@@ -33,47 +33,87 @@ class ConferencePaperController extends Controller
     }
 
 
+    // public function storeCo(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'title' => 'required|string',
+    //         'link' => 'required|string',
+    //         'pdf_path' => 'required|file|mimes:pdf|max:2048',
+    //         'image_path' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+    //         'publication_date' => 'required|date',
+    //     ]);
+    
+    //     $pdfFile = $request->file('pdf_path');
+    //     $imageFile = $request->file('image_path');
+    
+    //     // Store PDF file in public folder
+    //     $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
+    //     $pdfFile->move(public_path('conference_papers'), $pdfFileName);
+    //     $pdfPath = 'conference_papers/' . $pdfFileName;
+    
+    //     // Store image file in public folder
+    //     $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
+    //     $imageFile->move(public_path('conference_papers'), $imageFileName);
+    //     $imagePath = 'conference_papers/' . $imageFileName;
+    
+    //     $conferencePaper = ConferencePaper::create([
+    //         'title' => $validatedData['title'],
+    //         'link' => $validatedData['link'],
+    //         'pdf_path' => $pdfPath,
+    //         'image_path' => $imagePath,
+    //         'publication_date' => $validatedData['publication_date'],
+    //     ]);
+    
+    //     // Attach selected team members to the journal paper
+    //     $conferencePaper->teams()->attach($request->input('team_members'));
+    
+    //     $conferencePapers = ConferencePaper::all();
+    //     $teamMembers = Team::all();
+    
+    //     return redirect()->route('admin.conference_papers.index')->with('success', 'Conference paper created successfully!');
+    // }
+
     public function storeCo(Request $request)
     {
         $validatedData = $request->validate([
             'title' => 'required|string',
             'link' => 'required|string',
             'pdf_path' => 'required|file|mimes:pdf|max:2048',
-            'image_path' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+            'image_path' => 'nullable|file|mimes:jpeg,png,jpg|max:2048', // 'nullable' for optional image
             'publication_date' => 'required|date',
         ]);
     
-        $pdfFile = $request->file('pdf_path');
-        $imageFile = $request->file('image_path');
+        try {
+            $pdfFile = $request->file('pdf_path');
+            $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
+            $pdfFile->move(public_path('conference_papers'), $pdfFileName);
+            $pdfPath = 'conference_papers/' . $pdfFileName;
     
-        // Store PDF file in public folder
-        $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
-        $pdfFile->move(public_path('conference_papers'), $pdfFileName);
-        $pdfPath = 'conference_papers/' . $pdfFileName;
+            // Process image if it exists
+            $imagePath = null;
+            if ($request->hasFile('image_path')) {
+                $imageFile = $request->file('image_path');
+                $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
+                $imageFile->move(public_path('conference_papers'), $imageFileName);
+                $imagePath = 'conference_papers/' . $imageFileName;
+            }
     
-        // Store image file in public folder
-        $imageFileName = time() . '_' . $imageFile->getClientOriginalName();
-        $imageFile->move(public_path('conference_papers'), $imageFileName);
-        $imagePath = 'conference_papers/' . $imageFileName;
+            $conferencePaper = ConferencePaper::create([
+                'title' => $validatedData['title'],
+                'link' => $validatedData['link'],
+                'pdf_path' => $pdfPath,
+                'image_path' => $imagePath,
+                'publication_date' => $validatedData['publication_date'],
+            ]);
     
-        $conferencePaper = ConferencePaper::create([
-            'title' => $validatedData['title'],
-            'link' => $validatedData['link'],
-            'pdf_path' => $pdfPath,
-            'image_path' => $imagePath,
-            'publication_date' => $validatedData['publication_date'],
-        ]);
+            $conferencePaper->teams()->attach($request->input('team_members'));
     
-        // Attach selected team members to the journal paper
-        $conferencePaper->teams()->attach($request->input('team_members'));
-    
-        $conferencePapers = ConferencePaper::all();
-        $teamMembers = Team::all();
-    
-        return redirect()->route('admin.conference_papers.index')->with('success', 'Conference paper created successfully!');
+            return redirect()->route('admin.conference_papers.index')->with('success', 'Conference paper created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create conference paper. Please try again.']);
+        }
     }
-
-
+    
 
     public function updateCo(Request $request, ConferencePaper $conferencePaper)
     {

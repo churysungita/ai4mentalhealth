@@ -81,14 +81,25 @@
                                                 <label for="link">Link:</label>
                                                 <input type="text" class="form-control" id="link" name="link" required>
                                             </div>
-                                            <div class="form-group">
+                                              <div class="form-group">
                                                 <label for="pdf_path">PDF File:</label>
-                                                <input type="file" class="form-control-file" id="pdf_path" name="pdf_path" required>
+                                                <sub class="text-danger">min size: MB 2</sub>
+                                                <input type="file" class="form-control-file" id="pdf_path" name="pdf_path" accept=".pdf" required>
+                                                @error('pdf_path')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
-                                            <div class="form-group">
+                                        <div class="form-group">
                                                 <label for="image_path">Image File:</label>
-                                                <input type="file" class="form-control-file" id="image_path" name="image_path">
+                                               <sub class="text-danger">min size: MB 2</sub>
+                                                <input type="file" class="form-control-file" id="image_path" name="image_path" accept=".jpeg, .png, .jpg">
+                                                @error('image_path')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
+
+
+                                           
                                             <div class="form-group">
                                                 <label for="publication_date">Publication Date:</label>
                                                 <input type="date" class="form-control" id="publication_date" name="publication_date" required>
@@ -105,6 +116,8 @@
 
                                             <button type="submit" class="btn btn-primary">Create</button>
                                         </form>
+
+      
                                     </div>
 
 
@@ -178,12 +191,14 @@
                                                             <div class="form-group">
                                                                 <label for="updatePDF{{ $conferencePaper->id }}">Upload
                                                                     PDF:</label>
-                                                                <input type="file" class="form-control-file" id="updatePDF{{ $conferencePaper->id }}" name="pdf_path">
+                                                                 <sub class="text-danger">min size: MB 2</sub>
+                                                                <input type="file" class="form-control-file" id="updatePDF{{ $conferencePaper->id }}" name="pdf_path" accept=".pdf">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="updateImage{{ $conferencePaper->id }}">Upload
                                                                     Image:</label>
-                                                                <input type="file" class="form-control-file" id="updateImage{{ $conferencePaper->id }}" name="image_path">
+                                                                    <sub class="text-danger">min size: MB 2</sub>
+                                                                <input type="file" class="form-control-file" id="updateImage{{ $conferencePaper->id }}" name="image_path" accept=".jpeg, .png, .jpg">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="updateTeamMembers{{ $conferencePaper->id }}">Team

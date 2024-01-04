@@ -164,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-
+</div>
                 <!-- partial:partials/_footer.html -->
                 @include('admin.footer')
                 <!-- partial -->

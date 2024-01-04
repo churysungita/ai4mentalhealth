@@ -78,7 +78,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="image_path">Thumbnail Image:</label>
-                                            <input type="file" class="form-control" id="image_path" name="image_path">
+                                            <sub class="text-danger">min size: MB 2</sub>
+                                            <input type="file" class="form-control" id="image_path" name="image_path" accept=".jpeg, .png, .jpg">
                                         </div>
                                         <div class="form-group">
                                             <label for="content">Content:</label>
@@ -138,7 +139,8 @@
                                                             <div class="form-group">
                                                                 <label for="editImage{{ $blog->id }}">Image
                                                                     Thumbnail:</label>
-                                                                <input type="file" class="form-control" id="editImage{{ $blog->id }}" name="image_path" value="{{ $blog->image_path }}">
+                                                                    <sub class="text-danger">min size: MB 2</sub>
+                                                                <input type="file" class="form-control" id="editImage{{ $blog->id }}" name="image_path" value="{{ $blog->image_path }}" accept=".jpeg, .png, .jpg">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="editContent{{ $blog->id }}">Content:</label>

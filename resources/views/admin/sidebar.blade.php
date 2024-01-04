@@ -44,12 +44,12 @@
                   
                    
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" role="button" aria-expanded="false" aria-controls="general-pages">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#general-pages1" role="button" aria-expanded="false" aria-controls="general-pages">
                             <i class="link-icon" data-feather="book"></i>
                             <span class="link-title">Publications</span>
                             <i class="link-arrow" data-feather="chevron-down"></i>
                         </a>
-                        <div class="collapse" id="general-pages">
+                        <div class="collapse" id="general-pages1">
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.conference_papers.index') }}" class="nav-link">Conference Paper</a>

@@ -94,12 +94,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="image_path">Image File:</label>
-                                            <input type="file" class="form-control" id="image_path" name="image_path">
+                                            <sub class="text-danger">min size: MB 2</sub>
+                                            <input type="file" class="form-control" id="image_path" name="image_path" accept=".jpeg, .png, .jpg">
                                         </div>
-                                        <div class="form-group">
+
+                                        <div class="form-group mt-2">
                                             <label for="action_link">Action Link:</label>
                                             <input type="text" class="form-control" id="action_link" name="action_link">
                                         </div>
+                                        <br>
                                         <button type="submit" id="createSlideshow" class="btn btn-primary">Submit</button>
                                     </form>
 
@@ -154,8 +157,9 @@
                                                                 <textarea class="form-control" id="updateContent{!! $slideshow->id !!}" name="content">{!! $slideshow->content !!}</textarea>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="updateImagePath{{ $slideshow->id }}">Image Path:</label>
-                                                                <input type="file" class="form-control" id="updateImagePath{{ $slideshow->id }}" name="image_path" value="{{ $slideshow->image_path }}">
+                                                                <label for="updateImagePath{{ $slideshow->id }}">Image File:</label>
+                                                                <sub class="text-danger">min size: MB 2</sub>
+                                                                <input type="file" class="form-control" id="updateImagePath{{ $slideshow->id }}" name="image_path" value="{{ $slideshow->image_path }}" accept=".jpeg, .png, .jpg">
 
                                                             </div>
                                                             <div class="form-group">
